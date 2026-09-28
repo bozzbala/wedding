@@ -179,12 +179,6 @@ body.opened .fade-late{opacity:1;transform:none}
 .invite{text-align:center}
 .invite .title{font-size:clamp(42px,11.5vw,58px)}
 .invite .who{font-family:var(--body);font-style:italic;color:var(--sage-d);font-size:15.5px;max-width:360px;margin:22px auto 0}
-.photo-reveal{position:relative;margin:54px auto 0;max-width:420px}
-.photo-reveal .frame{position:relative;border-radius:200px 200px 16px 16px;overflow:hidden;aspect-ratio:3/4;box-shadow:0 30px 60px -30px rgba(150,100,25,.42)}
-.photo-reveal img{width:100%;height:118%;object-fit:cover;will-change:transform}
-.photo-reveal .caption{position:absolute;left:-6px;bottom:28px;background:var(--paper);padding:12px 18px 10px;border-radius:2px;
-  box-shadow:0 12px 30px -12px rgba(0,0,0,.25);font-family:var(--script);font-size:28px;color:var(--olive);transform:rotate(-4deg)}
-.photo-reveal .deco{position:absolute;right:-14px;top:-14px;width:90px;height:90px;border-radius:50%;border:1px solid var(--gold);opacity:.6}
 
 /* ============ DATE ============ */
 /* Rich red band with gold accents so the date + countdown stand out from the cream sections around it. */
@@ -296,8 +290,6 @@ body.opened .fade-late{opacity:1;transform:none}
 .sw span{display:block;margin-top:8px;font-family:var(--caps);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 
 /* ============ RSVP ============ */
-.hosts{margin-top:22px;font-family:var(--serif);font-size:18px;letter-spacing:.06em}
-.hosts span{display:block;font-family:var(--caps);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-l);margin-bottom:4px}
 .rsvp{max-width:420px;margin:36px auto 0;background:var(--paper);border-radius:24px;padding:32px 24px 28px;box-shadow:0 40px 70px -40px rgba(150,100,25,.42);border:1px solid rgba(179,139,77,.22)}
 .field{margin-bottom:20px}
 .field>label,.field .lbl{display:block;font-family:var(--caps);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
@@ -331,16 +323,6 @@ textarea.inp{min-height:88px;resize:vertical}
 .thanks h3{font-family:var(--script);font-weight:400;font-size:44px;color:var(--olive)}
 .thanks p{color:var(--muted);font-size:15px;margin-top:6px}
 .demo-note{font-size:12px;color:#a0472f;margin-top:10px}
-
-/* ============ FINALE ============ */
-.finale{height:92vh;min-height:520px;padding:0;color:#fff;overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
-.finale img{position:absolute;inset:-10% 0;width:100%;height:120%;object-fit:cover;object-position:50% 40%;will-change:transform}
-.finale::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,18,10,.1) 30%,rgba(30,18,10,.82))}
-.finale-inner{position:relative;z-index:2;text-align:center;padding:0 24px 70px}
-.finale .kz{font-family:var(--body);font-style:italic;font-size:16px;color:var(--gold-l)}
-.finale h2{font-family:var(--script);font-weight:400;font-size:clamp(58px,16vw,84px);line-height:1;margin-top:8px}
-.finale p{margin-top:18px;font-family:var(--serif);font-size:19px;letter-spacing:.06em;opacity:.92}
-.sign{margin-top:26px;font-family:var(--caps);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;opacity:.78}
 
 /* ============ DESKTOP: split screen ============ */
 @media (min-width:1000px){
@@ -469,12 +451,6 @@ textarea.inp{min-height:88px;resize:vertical}
     <p class="who" data-a="up" style="--d:.1s" data-i18n="who">Ағайын-туыс, бауырлар, құда-жекжат, нағашы-жиен, дос-жаран, көршілер мен әріптестер!</p>
     <p class="lead" data-a="up" style="--d:.25s" data-i18n="lead1">Сіздерді өміріміздегі ең қуанышты күн — үйлену тойымыздың қадірлі қонағы болуға шақырамыз!</p>
     <p class="lead" data-a="up" style="--d:.4s" data-i18n="lead2">Осы бақытты сәтте жанымызда ең жақын жандарымыздың болғаны біз үшін үлкен қуаныш.</p>
-
-    <div class="photo-reveal">
-      <div class="deco" data-a="zoom" style="--d:.6s"></div>
-      <div class="frame" data-a="wipe"><img src="images/portrait.webp" alt="Темірлан мен Мадина" data-parallax="-0.08" loading="lazy"></div>
-      <div class="caption" data-a="left" style="--d:.8s" data-i18n="caption">мәңгі бірге</div>
-    </div>
   </section>
 
   <!-- ===== DATE ===== -->
@@ -581,8 +557,6 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== RSVP ===== -->
   <section class="rsvp-sec paper" id="rsvp">
-    <div class="tear bottom t3"></div>
-    <svg class="leaves bl" viewBox="0 0 200 150" aria-hidden="true"><use class="sway" href="#cluster" width="200" height="150"/></svg>
     <div class="eyebrow" data-a="up" data-i18n="rsvpEy">Анкета</div>
     <h2 class="title split" data-split data-i18n="rsvpT">Келесіз бе?</h2>
     <p class="lead" data-a="up" data-i18n="rsvpLead">Тойға келуіңізді алдын ала растауыңызды сұраймыз!</p>
@@ -612,18 +586,6 @@ textarea.inp{min-height:88px;resize:vertical}
     </div>
   </section>
 
-  <!-- ===== FINALE ===== -->
-  <section class="finale band">
-    <img src="images/bridge.webp" alt="" data-parallax="-0.12" loading="lazy">
-    <div class="finale-inner">
-      <div class="kz" data-a="up" data-i18n="fin1">Сіздерді тойымызда</div>
-      <h2 data-a="blur" style="--d:.2s" data-i18n="fin2">күтеміз!</h2>
-      <p data-a="up" style="--d:.4s" data-i18n="fin3">26 қазан 2026 · 18:00 · AQ-OTAY</p>
-      <div class="sign" data-a="up" style="--d:.6s" data-i18n="sign">Құрметпен, Темірлан &amp; Мадина</div>
-      <div class="hosts" id="hosts" data-a="up" style="--d:.75s" hidden><span data-i18n="hosts">Той иелері</span><b id="hostsNames"></b></div>
-    </div>
-  </section>
-
 </main>
 
 <script>
@@ -638,8 +600,6 @@ var VENUE = {
 // Google Apps Script "Web app" /exec URL for this couple's RSVP sheet.
 // Leave empty until deployed: the form then runs in demo mode and says so.
 var RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwRK81tLfKUWxzdV2VEvw6NcKOIXq5xyw8chg3LR062-GJT9_AKzpbBTSUvXx6Ta9bG/exec';
-// Той иелері (usually the parents), e.g. 'Қанат — Жанат'. Shown in the finale when set.
-var HOSTS = '';
 // Falling leaves over the page. Switched off for now; set to true to bring them back.
 var FALLING_LEAVES = false;
 
@@ -650,7 +610,6 @@ var RU = {
   who: 'Родные и близкие, братья и сёстры, сваты, друзья, соседи и коллеги!',
   lead1: 'Приглашаем вас стать почётными гостями в самый счастливый день нашей жизни — на нашу свадьбу!',
   lead2: 'Для нас большая радость, когда в этот счастливый момент рядом самые близкие люди.',
-  caption: 'навсегда вместе',
   when: 'День торжества', month: 'Октябрь', yearDay: '2026 · понедельник', time: 'Начало в 18:00',
   until: 'До тоя осталось', cdD: 'дней', cdH: 'часов', cdM: 'минут', cdS: 'секунд', ics: 'Добавить в календарь',
   place: 'Место торжества', restaurant: 'Ресторан', map: 'Открыть в 2ГИС',
@@ -668,8 +627,6 @@ var RU = {
   a1: 'Да, конечно', a2: 'Приду с супругом / супругой', a3: 'К сожалению, не смогу прийти', send: 'Отправить',
   thx: 'Спасибо!', thxText: 'Ваш ответ принят. До встречи на тое!',
   demo: 'Демо-режим: форма ещё не подключена к таблице, ответ не отправлен.',
-  fin1: 'С нетерпением', fin2: 'ждём вас!', fin3: '26 октября 2026 · 18:00 · AQ-OTAY',
-  sign: 'С уважением, Темірлан &amp; Мадина', hosts: 'Хозяева тоя'
 };
 // Strings only JS uses, in both languages.
 var TXT = {
@@ -832,8 +789,6 @@ var TXT = {
     a.download = 'temirlan-madina-toi.ics';
     document.body.appendChild(a); a.click(); a.remove();
   });
-
-  if (HOSTS){ document.getElementById('hostsNames').textContent = HOSTS; document.getElementById('hosts').hidden = false; }
 
   /* ---------- venue ---------- */
   document.getElementById('venueName').textContent = VENUE.name;
