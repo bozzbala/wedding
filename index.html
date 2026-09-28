@@ -124,6 +124,8 @@ button,input,textarea{font:inherit;color:inherit}
   transform:rotate(var(--r,0deg));transform-origin:50% 92%;filter:drop-shadow(0 7px 9px rgba(70,35,5,.3));
   animation:lsway var(--t,7s) ease-in-out infinite;animation-delay:var(--dl,0s)}
 .lf.back{z-index:-1;filter:drop-shadow(0 5px 7px rgba(70,35,5,.22))}
+/* the big ones read as closer to the camera: slightly soft, a touch lighter so text over them stays legible */
+.lf.big{opacity:.9;filter:blur(.6px) drop-shadow(0 10px 14px rgba(70,35,5,.25))}
 @keyframes lsway{0%,100%{transform:rotate(calc(var(--r,0deg) - 3deg))}50%{transform:rotate(calc(var(--r,0deg) + 3deg))}}
 .progress{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);
   background:linear-gradient(90deg,var(--gold-l),var(--gold));z-index:60}
@@ -414,6 +416,9 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== INVITE ===== -->
   <section class="invite paper">
+    <img class="lf back big" src="images/leaves/leaf-9.webp" alt="" aria-hidden="true" style="--w:200px;--r:28deg;--t:9s;--dl:-2s;right:-96px;top:24%">
+    <img class="lf back big" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:170px;--r:-22deg;--t:10s;--dl:-5s;left:-86px;bottom:4%">
+    <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:90px;--r:60deg;--t:7s;--dl:-3s;left:-30px;top:16%">
     <div class="tear top t1"></div><div class="tear bottom t2"></div>
     <img class="lf edge-top" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:112px;--r:35deg;--t:7.5s;--dl:-1s;right:-26px;top:-74px">
     <img class="lf edge-top" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:92px;--r:-22deg;--t:6.5s;--dl:-3s;right:58px;top:-56px">
@@ -436,6 +441,9 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== DATE ===== -->
   <section class="date-sec band">
+    <img class="lf back big" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:180px;--r:-32deg;--t:9s;--dl:-1s;right:-86px;top:6%">
+    <img class="lf back big" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:150px;--r:38deg;--t:10s;--dl:-4s;left:-78px;top:30%">
+    <img class="lf back" src="images/leaves/leaf-6.webp" alt="" aria-hidden="true" style="--w:96px;--r:-60deg;--t:7s;--dl:-2s;right:-52px;bottom:1%">
     <img class="lf back" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:64px;--r:40deg;--t:7s;--dl:-3s;left:-24px;top:62%">
     <h2 class="title split" data-split data-i18n="when">Той күні</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
@@ -467,6 +475,8 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== VENUE ===== -->
   <section class="venue paper">
+    <img class="lf back big" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:190px;--r:24deg;--t:9s;--dl:-3s;left:-96px;top:8%">
+    <img class="lf back" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:120px;--r:-40deg;--t:8s;--dl:-1s;right:-54px;bottom:18%">
     <div class="tear top t3"></div><div class="tear bottom t1"></div>
     <img class="lf" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:106px;--r:-30deg;--t:7.5s;--dl:-2s;left:-24px;bottom:-78px">
     <img class="lf" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:70px;--r:26deg;--t:6.5s;--dl:-4s;left:66px;bottom:-54px">
@@ -493,6 +503,9 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== TIMELINE ===== -->
   <section class="tl-sec band">
+    <img class="lf back big" src="images/leaves/leaf-6.webp" alt="" aria-hidden="true" style="--w:190px;--r:40deg;--t:10s;--dl:-2s;left:-104px;top:22%">
+    <img class="lf back big" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:170px;--r:-24deg;--t:9s;--dl:-4s;right:-82px;bottom:8%">
+    <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:90px;--r:70deg;--t:7s;--dl:-1s;right:-34px;top:14%">
     <img class="lf back" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:78px;--r:-52deg;--t:8s;--dl:-2s;right:-30px;top:52%">
     <h2 class="title split" data-split data-i18n="prog">Бағдарлама</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
@@ -536,6 +549,8 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== DRESS CODE ===== -->
   <section class="dress paper">
+    <img class="lf back big" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:180px;--r:-26deg;--t:9s;--dl:-3s;left:-88px;top:56%">
+    <img class="lf back big" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:160px;--r:34deg;--t:10s;--dl:-1s;right:-78px;top:42%">
     <div class="tear top t2"></div>
     <img class="lf" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:106px;--r:30deg;--t:7s;--dl:-3s;right:-22px;top:-76px">
     <img class="lf" src="images/leaves/leaf-7.webp" alt="" aria-hidden="true" style="--w:86px;--r:-18deg;--t:8s;--dl:-1s;right:66px;top:-54px">
@@ -565,6 +580,9 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== RSVP ===== -->
   <section class="rsvp-sec paper" id="rsvp">
+    <img class="lf back big" src="images/leaves/leaf-9.webp" alt="" aria-hidden="true" style="--w:200px;--r:-30deg;--t:10s;--dl:-2s;left:-100px;top:50%">
+    <img class="lf back big" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:170px;--r:28deg;--t:9s;--dl:-5s;right:-82px;top:10%">
+    <img class="lf back" src="images/leaves/leaf-7.webp" alt="" aria-hidden="true" style="--w:110px;--r:50deg;--t:8s;--dl:-3s;right:-44px;bottom:28%">
     <img class="lf back" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:90px;--r:-34deg;--t:8s;--dl:-1s;left:-34px;top:30%">
     <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:70px;--r:42deg;--t:7s;--dl:-4s;right:-24px;top:52%">
     <img class="lf back" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:100px;--r:-14deg;--t:7.5s;--dl:-2s;right:-20px;bottom:6px">
