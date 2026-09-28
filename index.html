@@ -118,14 +118,13 @@ button,input,textarea{font:inherit;color:inherit}
 .t2{background-image:url(images/tear-2.png);background-position:-140px 0}
 .t3{background-image:url(images/tear-3.png);background-position:-300px 0}
 
-/* autumn leaf clusters resting on the torn edges */
-.leaves{position:absolute;z-index:4;width:150px;height:auto;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(90,50,10,.28))}
-.leaves.tr{right:-18px;top:-78px}
-.leaves.bl{left:-22px;bottom:-72px;transform:scaleX(-1)}
-.leaves.tl{left:-20px;top:-80px;transform:scaleX(-1) rotate(8deg)}
-.leaves .sway{transform-box:fill-box;transform-origin:70% 90%;animation:sway 6.5s ease-in-out infinite}
-.leaves.bl .sway,.leaves.tl .sway{animation-duration:7.5s;animation-delay:-2s}
-@keyframes sway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(3deg)}}
+/* Real scanned maple leaves (ambientCG LeafSet027/028, CC0).
+   Bunches sit on the torn edges in front; singles peek in from the page edge behind the text. */
+.lf{position:absolute;z-index:4;width:var(--w,90px);height:auto;pointer-events:none;
+  transform:rotate(var(--r,0deg));transform-origin:50% 92%;filter:drop-shadow(0 7px 9px rgba(70,35,5,.3));
+  animation:lsway var(--t,7s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+.lf.back{z-index:-1;filter:drop-shadow(0 5px 7px rgba(70,35,5,.22))}
+@keyframes lsway{0%,100%{transform:rotate(calc(var(--r,0deg) - 3deg))}50%{transform:rotate(calc(var(--r,0deg) + 3deg))}}
 .progress{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);
   background:linear-gradient(90deg,var(--gold-l),var(--gold));z-index:60}
 #petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
@@ -187,7 +186,7 @@ body.opened .fade-late{opacity:1;transform:none}
 .date-sec{background:radial-gradient(ellipse at 50% 0%,#c4434b 0%,#9a2a33 48%,#6b1820 100%);color:#fff6ea;text-shadow:0 1px 2px rgba(60,6,10,.3)}
 .date-sec::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;
   background-image:radial-gradient(rgba(255,220,170,.18) 1px,transparent 1.3px);background-size:22px 22px}
-.date-sec>*{position:relative}
+.date-sec>*:not(.lf){position:relative}
 .date-sec .eyebrow{color:var(--gold-l)}
 .date-sec .title{color:#fff6ea;text-shadow:0 3px 16px rgba(60,6,10,.4)}
 .date-sec .big-date{color:#fff6ea}
@@ -328,7 +327,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
 /* ============ DESKTOP: split screen ============ */
 @media (min-width:1000px){
-  .invite .tear.top,.invite .leaves.tr{display:none}
+  .invite .tear.top,.invite .edge-top{display:none}
   .side{display:block;position:fixed;left:0;top:0;bottom:0;right:560px;overflow:hidden;color:#fff;z-index:1}
   .side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;transform:scale(1.15);transition:transform 8s cubic-bezier(.2,.6,.2,1)}
   body.opened .side img{transform:scale(1)}
@@ -351,32 +350,6 @@ textarea.inp{min-height:88px;resize:vertical}
 </style>
 </head>
 <body>
-
-<!-- autumn leaf cluster, reused on the torn edges -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="lgGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7d57e"/><stop offset="1" stop-color="#d6962a"/></linearGradient>
-    <linearGradient id="lgAmber" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3ae4b"/><stop offset="1" stop-color="#c2621d"/></linearGradient>
-    <linearGradient id="lgRust" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9683b"/><stop offset="1" stop-color="#8e2f1f"/></linearGradient>
-    <radialGradient id="rgBerry" cx=".35" cy=".3" r=".7"><stop offset="0" stop-color="#d0574c"/><stop offset="1" stop-color="#6e1f24"/></radialGradient>
-    <symbol id="maple" viewBox="0 0 100 100">
-      <path d="M50 4 L57 22 L67 15 L64 36 L82 27 L77 41 L94 45 L79 55 L85 62 L64 65 L67 78 L54 71 L52 96 L48 96 L46 71 L33 78 L36 65 L15 62 L21 55 L6 45 L23 41 L18 27 L36 36 L33 15 L43 22 Z"/>
-      <path d="M50 96 V26 M50 62 L24 45 M50 62 L76 45 M50 70 L30 69 M50 70 L70 69" fill="none" stroke="rgba(255,238,200,.55)" stroke-width="1.4" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="leaf" viewBox="0 0 100 100">
-      <path d="M50 3 C73 20 80 56 50 97 C20 56 27 20 50 3Z"/>
-      <path d="M50 97 V10 M50 40 L37 30 M50 40 L63 30 M50 58 L34 48 M50 58 L66 48 M50 76 L39 68 M50 76 L61 68" fill="none" stroke="rgba(255,238,200,.55)" stroke-width="1.3" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="cluster" viewBox="0 0 200 150">
-      <use href="#leaf" x="118" y="40" width="56" height="72" fill="url(#lgGold)" transform="rotate(52 146 76)"/>
-      <use href="#maple" x="66" y="6" width="84" height="84" fill="url(#lgAmber)" transform="rotate(16 108 48)"/>
-      <use href="#maple" x="16" y="44" width="72" height="72" fill="url(#lgRust)" transform="rotate(-26 52 80)"/>
-      <use href="#leaf" x="62" y="74" width="48" height="64" fill="url(#lgGold)" transform="rotate(-62 86 106)"/>
-      <g fill="url(#rgBerry)"><circle cx="104" cy="92" r="6"/><circle cx="115" cy="99" r="5"/><circle cx="101" cy="104" r="5"/><circle cx="112" cy="87" r="4"/></g>
-      <g fill="rgba(255,255,255,.55)"><circle cx="102" cy="90" r="1.4"/><circle cx="113" cy="97" r="1.2"/><circle cx="99" cy="102" r="1.2"/></g>
-    </symbol>
-  </defs>
-</svg>
 
 <!-- ===== INTRO ENVELOPE ===== -->
 <div class="intro" id="intro">
@@ -442,7 +415,13 @@ textarea.inp{min-height:88px;resize:vertical}
   <!-- ===== INVITE ===== -->
   <section class="invite paper">
     <div class="tear top t1"></div><div class="tear bottom t2"></div>
-    <svg class="leaves tr" viewBox="0 0 200 150" aria-hidden="true"><use class="sway" href="#cluster" width="200" height="150"/></svg>
+    <img class="lf edge-top" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:112px;--r:35deg;--t:7.5s;--dl:-1s;right:-26px;top:-74px">
+    <img class="lf edge-top" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:92px;--r:-22deg;--t:6.5s;--dl:-3s;right:58px;top:-56px">
+    <img class="lf edge-top" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:68px;--r:72deg;--t:8s;--dl:-2s;right:10px;top:-6px">
+    <img class="lf back" src="images/leaves/leaf-7.webp" alt="" aria-hidden="true" style="--w:84px;--r:-38deg;--t:8s;--dl:-4s;left:-38px;top:46%">
+    <img class="lf back" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:66px;--r:48deg;--t:7s;--dl:-1s;right:-26px;bottom:16%">
+    <img class="lf" src="images/leaves/leaf-6.webp" alt="" aria-hidden="true" style="--w:88px;--r:-24deg;--t:7s;--dl:-5s;left:-22px;bottom:-88px">
+    <img class="lf" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:64px;--r:22deg;--t:6s;--dl:-2s;left:52px;bottom:-62px">
     <div class="eyebrow" data-a="up" data-i18n="invite">Шақырту</div>
     <h2 class="title split" data-split data-i18n="guests">Құрметті қонақтар</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
@@ -457,6 +436,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== DATE ===== -->
   <section class="date-sec band">
+    <img class="lf back" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:64px;--r:40deg;--t:7s;--dl:-3s;left:-24px;top:62%">
     <h2 class="title split" data-split data-i18n="when">Той күні</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
       <path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/>
@@ -488,7 +468,9 @@ textarea.inp{min-height:88px;resize:vertical}
   <!-- ===== VENUE ===== -->
   <section class="venue paper">
     <div class="tear top t3"></div><div class="tear bottom t1"></div>
-    <svg class="leaves bl" viewBox="0 0 200 150" aria-hidden="true"><use class="sway" href="#cluster" width="200" height="150"/></svg>
+    <img class="lf" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:106px;--r:-30deg;--t:7.5s;--dl:-2s;left:-24px;bottom:-78px">
+    <img class="lf" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:70px;--r:26deg;--t:6.5s;--dl:-4s;left:66px;bottom:-54px">
+    <img class="lf back" src="images/leaves/leaf-9.webp" alt="" aria-hidden="true" style="--w:86px;--r:58deg;--t:8s;--dl:-1s;right:-34px;top:34%">
     <h2 class="title split" data-split data-i18n="place">Той орны</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
       <path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/>
@@ -511,6 +493,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== TIMELINE ===== -->
   <section class="tl-sec band">
+    <img class="lf back" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:78px;--r:-52deg;--t:8s;--dl:-2s;right:-30px;top:52%">
     <h2 class="title split" data-split data-i18n="prog">Бағдарлама</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
       <path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/>
@@ -554,7 +537,10 @@ textarea.inp{min-height:88px;resize:vertical}
   <!-- ===== DRESS CODE ===== -->
   <section class="dress paper">
     <div class="tear top t2"></div>
-    <svg class="leaves tr" viewBox="0 0 200 150" aria-hidden="true"><use class="sway" href="#cluster" width="200" height="150"/></svg>
+    <img class="lf" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:106px;--r:30deg;--t:7s;--dl:-3s;right:-22px;top:-76px">
+    <img class="lf" src="images/leaves/leaf-7.webp" alt="" aria-hidden="true" style="--w:86px;--r:-18deg;--t:8s;--dl:-1s;right:66px;top:-54px">
+    <img class="lf" src="images/leaves/leaf-6.webp" alt="" aria-hidden="true" style="--w:62px;--r:76deg;--t:6.5s;--dl:-5s;right:22px;top:-6px">
+    <img class="lf back" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:72px;--r:-44deg;--t:7.5s;--dl:-2s;left:-30px;top:38%">
     <h2 class="title split" data-split data-i18n="colors">Дресс-код</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
       <path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/>
@@ -579,6 +565,10 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== RSVP ===== -->
   <section class="rsvp-sec paper" id="rsvp">
+    <img class="lf back" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:90px;--r:-34deg;--t:8s;--dl:-1s;left:-34px;top:30%">
+    <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:70px;--r:42deg;--t:7s;--dl:-4s;right:-24px;top:52%">
+    <img class="lf back" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:100px;--r:-14deg;--t:7.5s;--dl:-2s;right:-20px;bottom:6px">
+    <img class="lf back" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:70px;--r:30deg;--t:6.5s;--dl:-5s;left:-14px;bottom:26px">
     <div class="eyebrow" data-a="up" data-i18n="rsvpEy">Анкета</div>
     <h2 class="title split" data-split data-i18n="rsvpT">Келесіз бе?</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
