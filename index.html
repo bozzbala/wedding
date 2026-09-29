@@ -7,23 +7,11 @@
 <meta name="description" content="Темірлан мен Мадинаның үйлену тойына шақырту — 26 қазан 2026, 18:00, AQ-OTAY, Алматы">
 <meta property="og:title" content="Темірлан &amp; Мадина — шақырту">
 <meta property="og:description" content="26 қазан 2026 · 18:00 · AQ-OTAY, Алматы">
-<meta property="og:image" content="https://bozzbala.github.io/wedding/images/hero-3.webp">
+<meta property="og:image" content="https://bozzbala.github.io/wedding/images/hero.webp">
 <meta property="og:url" content="https://bozzbala.github.io/wedding/">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#d39a3a">
-<script>
-/* TEMPORARY: pick a random hero photo on every load to compare them. ?hero=1|2 forces one.
-   pos = crop on phones (full-height portrait), side = crop in the wide desktop side panel. */
-var HERO_PHOTOS = [
-  { src: 'images/hero-2.webp', pos: '85% 50%', side: '56% 74%' },
-  { src: 'images/hero-3.webp', pos: '66% 40%', side: '50% 44%' }
-];
-var HERO = (function(){
-  var f = +(location.search.match(/[?&]hero=(\d)/) || [])[1];
-  return HERO_PHOTOS[f >= 1 && f <= HERO_PHOTOS.length ? f - 1 : Math.floor(Math.random() * HERO_PHOTOS.length)];
-})();
-function setHero(img, key){ img.src = HERO.src; img.style.objectPosition = HERO[key]; }
-</script>
+<link rel="preload" href="images/hero.webp" as="image">
 <style>
 /* Every face below covers the Kazakh letters (Ә Ғ Қ Ң Ө Ұ Ү Һ І) via its cyrillic-ext subset. */
 @font-face{font-family:'Shelley';src:url(fonts/asylbek-shelley.woff2) format('woff2');font-display:swap}
@@ -170,7 +158,7 @@ section{position:relative;padding:64px 26px}
 
 /* ============ HERO ============ */
 .hero{height:100vh;height:100svh;min-height:560px;padding:0;color:#fff;overflow:hidden}
-.hero-img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;object-position:50% 30%;transform:scale(1.18);transition:transform 7s cubic-bezier(.2,.6,.2,1)}
+.hero-img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;object-position:85% 50%;transform:scale(1.18);transition:transform 7s cubic-bezier(.2,.6,.2,1)}
 body.opened .hero-img{transform:scale(1)}
 .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,18,10,.42) 0%,rgba(30,18,10,0) 30%,rgba(30,18,10,.05) 55%,rgba(30,18,10,.78) 100%)}
 .hero-top{position:absolute;top:34px;left:0;right:0;z-index:2;text-align:center}
@@ -346,7 +334,7 @@ textarea.inp{min-height:88px;resize:vertical}
 @media (min-width:1000px){
   .invite .tear.top,.invite .edge-top{display:none}
   .side{display:block;position:fixed;left:0;top:0;bottom:0;right:560px;overflow:hidden;color:#fff;z-index:1}
-  .side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;transform:scale(1.15);transition:transform 8s cubic-bezier(.2,.6,.2,1)}
+  .side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:56% 74%;transform:scale(1.15);transition:transform 8s cubic-bezier(.2,.6,.2,1)}
   body.opened .side img{transform:scale(1)}
   .side::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(30,18,10,.15),rgba(30,18,10,0) 40%),linear-gradient(180deg,rgba(30,18,10,.35),rgba(30,18,10,0) 30%,rgba(30,18,10,0) 55%,rgba(30,18,10,.72))}
   .side-content{position:absolute;left:0;right:0;bottom:9%;z-index:2;text-align:center;padding:0 40px}
@@ -400,7 +388,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
 <!-- ===== DESKTOP SIDE PANEL ===== -->
 <aside class="side" aria-hidden="true">
-  <img alt=""><script>setHero(document.currentScript.previousElementSibling, 'side')</script>
+  <img src="images/hero.webp" alt="">
   <div class="side-top"><div class="eyebrow fade-late" style="--d:.15s" data-i18n="invite">Шақырту</div></div>
   <div class="side-content">
     <div class="names">
@@ -416,7 +404,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== HERO ===== -->
   <section class="hero band">
-    <img class="hero-img" alt="Темірлан мен Мадина"><script>setHero(document.currentScript.previousElementSibling, 'pos')</script>
+    <img class="hero-img" src="images/hero.webp" alt="Темірлан мен Мадина">
     <div class="hero-top"><div class="eyebrow fade-late" style="--d:.15s" data-i18n="invite">Шақырту</div></div>
     <div class="hero-content">
       <h1 class="names">
