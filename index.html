@@ -7,15 +7,14 @@
 <meta name="description" content="Темірлан мен Мадинаның үйлену тойына шақырту — 26 қазан 2026, 18:00, AQ-OTAY, Алматы">
 <meta property="og:title" content="Темірлан &amp; Мадина — шақырту">
 <meta property="og:description" content="26 қазан 2026 · 18:00 · AQ-OTAY, Алматы">
-<meta property="og:image" content="https://bozzbala.github.io/wedding/images/hero.webp">
+<meta property="og:image" content="https://bozzbala.github.io/wedding/images/hero-3.webp">
 <meta property="og:url" content="https://bozzbala.github.io/wedding/">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#d39a3a">
 <script>
-/* TEMPORARY: pick a random hero photo on every load to compare them. ?hero=1|2|3 forces one.
+/* TEMPORARY: pick a random hero photo on every load to compare them. ?hero=1|2 forces one.
    pos = crop on phones (full-height portrait), side = crop in the wide desktop side panel. */
 var HERO_PHOTOS = [
-  { src: 'images/hero.webp',   pos: '50% 30%', side: '50% 30%' },
   { src: 'images/hero-2.webp', pos: '58% 50%', side: '56% 74%' },
   { src: 'images/hero-3.webp', pos: '52% 40%', side: '50% 44%' }
 ];
@@ -205,10 +204,15 @@ body.opened .fade-late{opacity:1;transform:none}
 .date-sec .big-date{color:#fff6ea}
 .date-sec .big-date .m{border-left-color:rgba(240,201,110,.6)}
 .date-sec .big-date .m span{color:var(--gold-l)}
-.date-sec .cal .wd{color:var(--gold-l);border-bottom-color:rgba(240,201,110,.4)}
+.date-sec .cal .wd{color:rgba(255,246,234,.62);border-bottom-color:rgba(240,201,110,.4)}
+/* days off (weekends + the holiday moved to Monday) share one gold so the 26th reads as a day off */
+.date-sec .cal .wd.we{color:var(--gold-l)}
+.cal-note{max-width:320px;margin:18px auto 0;text-align:center;font-family:var(--body);font-style:italic;font-size:14px;line-height:1.5;color:var(--gold-l)}
+.cal-note::before{content:'';display:inline-block;width:7px;height:7px;margin:0 8px 2px 0;border-radius:50%;background:currentColor;vertical-align:middle}
 .date-sec .cal .dd{color:rgba(255,246,234,.9)}
 .date-sec .cal .dd.ev{color:#fff}
 .date-sec .cal .dd.ev path{stroke:var(--gold-l);stroke-width:1.8}
+.date-sec .cal .dd.we{color:var(--gold-l)}
 .date-sec .time-pill span{color:#fff6ea;border-color:var(--gold-l);background:rgba(240,201,110,.12)}
 .date-sec .btn{color:#fff6ea;border-color:var(--gold-l)}
 .date-sec .btn:hover{background:var(--gold-l);border-color:var(--gold-l);color:#6b1820;text-shadow:none}
@@ -459,6 +463,7 @@ textarea.inp{min-height:88px;resize:vertical}
       <div class="m"><b data-i18n="month">Қазан</b><span data-i18n="yearDay">2026 · дүйсенбі</span></div>
     </div>
     <div class="cal" id="cal" data-a="up"></div>
+    <p class="cal-note" data-a="up" data-i18n="calNote">Республика күніне байланысты 26 қазан — демалыс күні</p>
     <div class="time-pill" data-a="up"><span data-i18n="time">Сағат 18:00</span></div>
 
     <div class="eyebrow cd-title" data-a="up" data-i18n="until">Тойға дейін</div>
@@ -627,6 +632,8 @@ var VENUE = {
 };
 // Google Apps Script "Web app" /exec URL for this couple's RSVP sheet.
 // Leave empty until deployed: the form then runs in demo mode and says so.
+// Days off in the event month besides weekends (Republic Day, 25 Oct, falls on a Sunday in 2026 -> moved to Monday 26).
+var DAYS_OFF = [26];
 var RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwRK81tLfKUWxzdV2VEvw6NcKOIXq5xyw8chg3LR062-GJT9_AKzpbBTSUvXx6Ta9bG/exec';
 // Falling leaves over the page. Switched off for now; set to true to bring them back.
 var FALLING_LEAVES = false;
@@ -639,6 +646,7 @@ var RU = {
   lead1: 'Приглашаем вас стать почётными гостями в самый счастливый день нашей жизни — на нашу свадьбу!',
   lead2: 'Для нас большая радость, когда в этот счастливый момент рядом самые близкие люди.',
   when: 'День торжества', month: 'Октябрь', yearDay: '2026 · понедельник', time: 'Начало в 18:00',
+  calNote: '26 октября — выходной день в связи с Днём Республики',
   until: 'До тоя осталось', cdD: 'дней', cdH: 'часов', cdM: 'минут', cdS: 'секунд', ics: 'Добавить в календарь',
   place: 'Место торжества', restaurant: 'Ресторан', map: 'Открыть в 2ГИС',
   prog: 'Программа',
@@ -774,14 +782,15 @@ var TXT = {
   var lang = 'kk';
   function buildCalendar(){
     var cal = document.getElementById('cal'), wd = TXT[lang].wd, html = '';
-    wd.forEach(function(d){ html += '<div class="wd">' + d + '</div>'; });
+    wd.forEach(function(d, i){ html += '<div class="wd' + (i >= 5 ? ' we' : '') + '">' + d + '</div>'; });
     var y = EVENT.getFullYear(), m = EVENT.getMonth(), day = EVENT.getDate();
     var off = (new Date(y, m, 1).getDay() + 6) % 7, total = new Date(y, m + 1, 0).getDate();
     for (var i = 0; i < off; i++) html += '<div></div>';
     for (var d = 1; d <= total; d++){
+      var col = (off + d - 1) % 7, rest = col >= 5 || DAYS_OFF.indexOf(d) >= 0 ? ' we' : '';
       html += d === day
-        ? '<div class="dd ev">' + d + '<svg viewBox="0 0 52 46"><path pathLength="1" d="M30 5C17 2 5 10 5 23s11 19 23 18 19-8 18-19S37 4 24 6"/></svg></div>'
-        : '<div class="dd">' + d + '</div>';
+        ? '<div class="dd ev' + rest + '">' + d + '<svg viewBox="0 0 52 46"><path pathLength="1" d="M30 5C17 2 5 10 5 23s11 19 23 18 19-8 18-19S37 4 24 6"/></svg></div>'
+        : '<div class="dd' + rest + '">' + d + '</div>';
     }
     cal.innerHTML = html;
   }
