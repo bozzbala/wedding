@@ -11,7 +11,20 @@
 <meta property="og:url" content="https://bozzbala.github.io/wedding/">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#d39a3a">
-<link rel="preload" href="images/hero.webp" as="image">
+<script>
+/* TEMPORARY: pick a random hero photo on every load to compare them. ?hero=1|2|3 forces one.
+   pos = crop on phones (full-height portrait), side = crop in the wide desktop side panel. */
+var HERO_PHOTOS = [
+  { src: 'images/hero.webp',   pos: '50% 30%', side: '50% 30%' },
+  { src: 'images/hero-2.webp', pos: '58% 50%', side: '56% 74%' },
+  { src: 'images/hero-3.webp', pos: '52% 40%', side: '50% 44%' }
+];
+var HERO = (function(){
+  var f = +(location.search.match(/[?&]hero=(\d)/) || [])[1];
+  return HERO_PHOTOS[f >= 1 && f <= HERO_PHOTOS.length ? f - 1 : Math.floor(Math.random() * HERO_PHOTOS.length)];
+})();
+function setHero(img, key){ img.src = HERO.src; img.style.objectPosition = HERO[key]; }
+</script>
 <style>
 /* Every face below covers the Kazakh letters (Ә Ғ Қ Ң Ө Ұ Ү Һ І) via its cyrillic-ext subset. */
 @font-face{font-family:'Shelley';src:url(fonts/asylbek-shelley.woff2) format('woff2');font-display:swap}
@@ -124,8 +137,6 @@ button,input,textarea{font:inherit;color:inherit}
   transform:rotate(var(--r,0deg));transform-origin:50% 92%;filter:drop-shadow(0 7px 9px rgba(70,35,5,.3));
   animation:lsway var(--t,7s) ease-in-out infinite;animation-delay:var(--dl,0s)}
 .lf.back{z-index:-1;filter:drop-shadow(0 5px 7px rgba(70,35,5,.22))}
-/* the big ones read as closer to the camera: slightly soft, a touch lighter so text over them stays legible */
-.lf.big{opacity:.9;filter:blur(.6px) drop-shadow(0 10px 14px rgba(70,35,5,.25))}
 @keyframes lsway{0%,100%{transform:rotate(calc(var(--r,0deg) - 3deg))}50%{transform:rotate(calc(var(--r,0deg) + 3deg))}}
 .progress{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);
   background:linear-gradient(90deg,var(--gold-l),var(--gold));z-index:60}
@@ -385,7 +396,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
 <!-- ===== DESKTOP SIDE PANEL ===== -->
 <aside class="side" aria-hidden="true">
-  <img src="images/hero.webp" alt="">
+  <img alt=""><script>setHero(document.currentScript.previousElementSibling, 'side')</script>
   <div class="side-top"><div class="eyebrow fade-late" style="--d:.15s" data-i18n="invite">Шақырту</div></div>
   <div class="side-content">
     <div class="names">
@@ -401,7 +412,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== HERO ===== -->
   <section class="hero band">
-    <img class="hero-img" src="images/hero.webp" alt="Темірлан мен Мадина">
+    <img class="hero-img" alt="Темірлан мен Мадина"><script>setHero(document.currentScript.previousElementSibling, 'pos')</script>
     <div class="hero-top"><div class="eyebrow fade-late" style="--d:.15s" data-i18n="invite">Шақырту</div></div>
     <div class="hero-content">
       <h1 class="names">
@@ -416,17 +427,12 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== INVITE ===== -->
   <section class="invite paper">
-    <img class="lf back big" src="images/leaves/leaf-9.webp" alt="" aria-hidden="true" style="--w:200px;--r:28deg;--t:9s;--dl:-2s;right:-96px;top:24%">
-    <img class="lf back big" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:170px;--r:-22deg;--t:10s;--dl:-5s;left:-86px;bottom:4%">
-    <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:90px;--r:60deg;--t:7s;--dl:-3s;left:-30px;top:16%">
     <div class="tear top t1"></div><div class="tear bottom t2"></div>
-    <img class="lf edge-top" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:112px;--r:35deg;--t:7.5s;--dl:-1s;right:-26px;top:-74px">
-    <img class="lf edge-top" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:92px;--r:-22deg;--t:6.5s;--dl:-3s;right:58px;top:-56px">
-    <img class="lf edge-top" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:68px;--r:72deg;--t:8s;--dl:-2s;right:10px;top:-6px">
-    <img class="lf back" src="images/leaves/leaf-7.webp" alt="" aria-hidden="true" style="--w:84px;--r:-38deg;--t:8s;--dl:-4s;left:-38px;top:46%">
-    <img class="lf back" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:66px;--r:48deg;--t:7s;--dl:-1s;right:-26px;bottom:16%">
-    <img class="lf" src="images/leaves/leaf-6.webp" alt="" aria-hidden="true" style="--w:88px;--r:-24deg;--t:7s;--dl:-5s;left:-22px;bottom:-88px">
-    <img class="lf" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:64px;--r:22deg;--t:6s;--dl:-2s;left:52px;bottom:-62px">
+    <img class="lf edge-top" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:90px;--r:32deg;--t:7.5s;--dl:-1s;right:-20px;top:-66px">
+    <img class="lf edge-top" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:60px;--r:-26deg;--t:6.5s;--dl:-3s;right:62px;top:-42px">
+    <img class="lf back" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:66px;--r:-40deg;--t:8s;--dl:-2s;left:-30px;top:42%">
+    <img class="lf" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:86px;--r:-30deg;--t:7.5s;--dl:-2s;left:-18px;bottom:-72px">
+    <img class="lf" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:58px;--r:26deg;--t:6.5s;--dl:-4s;left:60px;bottom:-50px">
     <div class="eyebrow" data-a="up" data-i18n="invite">Шақырту</div>
     <h2 class="title split" data-split data-i18n="guests">Құрметті қонақтар</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
@@ -436,15 +442,12 @@ textarea.inp{min-height:88px;resize:vertical}
     </svg>
     <p class="who" data-a="up" style="--d:.1s" data-i18n="who">Ағайын-туыс, бауырлар, құда-жекжат, нағашы-жиен, дос-жаран, көршілер мен әріптестер!</p>
     <p class="lead" data-a="up" style="--d:.25s" data-i18n="lead1">Сіздерді өміріміздегі ең қуанышты күн — үйлену тойымыздың қадірлі қонағы болуға шақырамыз!</p>
-    <p class="lead" data-a="up" style="--d:.4s" data-i18n="lead2">Осы бақытты сәтте жанымызда ең жақын жандарымыздың болғаны біз үшін үлкен қуаныш.</p>
+    <p class="lead" data-a="up" style="--d:.4s" data-i18n="lead2">Осы бақытты сәтте қасымызда ең жақын адамдарымыздың болуы біз үшін үлкен қуаныш.</p>
   </section>
 
   <!-- ===== DATE ===== -->
   <section class="date-sec band">
-    <img class="lf back big" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:180px;--r:-32deg;--t:9s;--dl:-1s;right:-86px;top:6%">
-    <img class="lf back big" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:150px;--r:38deg;--t:10s;--dl:-4s;left:-78px;top:30%">
-    <img class="lf back" src="images/leaves/leaf-6.webp" alt="" aria-hidden="true" style="--w:96px;--r:-60deg;--t:7s;--dl:-2s;right:-52px;bottom:1%">
-    <img class="lf back" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:64px;--r:40deg;--t:7s;--dl:-3s;left:-24px;top:62%">
+    <img class="lf back" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:66px;--r:40deg;--t:8s;--dl:-2s;right:-30px;top:46%">
     <h2 class="title split" data-split data-i18n="when">Той күні</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
       <path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/>
@@ -475,12 +478,12 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== VENUE ===== -->
   <section class="venue paper">
-    <img class="lf back big" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:190px;--r:24deg;--t:9s;--dl:-3s;left:-96px;top:8%">
-    <img class="lf back" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:120px;--r:-40deg;--t:8s;--dl:-1s;right:-54px;bottom:18%">
     <div class="tear top t3"></div><div class="tear bottom t1"></div>
-    <img class="lf" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:106px;--r:-30deg;--t:7.5s;--dl:-2s;left:-24px;bottom:-78px">
-    <img class="lf" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:70px;--r:26deg;--t:6.5s;--dl:-4s;left:66px;bottom:-54px">
-    <img class="lf back" src="images/leaves/leaf-9.webp" alt="" aria-hidden="true" style="--w:86px;--r:58deg;--t:8s;--dl:-1s;right:-34px;top:34%">
+    <img class="lf" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:90px;--r:32deg;--t:7.5s;--dl:-1s;right:-20px;top:-66px">
+    <img class="lf" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:60px;--r:-26deg;--t:6.5s;--dl:-3s;right:62px;top:-42px">
+    <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:66px;--r:-44deg;--t:8s;--dl:-2s;left:-30px;top:52%">
+    <img class="lf" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:86px;--r:-30deg;--t:7.5s;--dl:-2s;left:-18px;bottom:-72px">
+    <img class="lf" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:58px;--r:26deg;--t:6.5s;--dl:-4s;left:60px;bottom:-50px">
     <h2 class="title split" data-split data-i18n="place">Той орны</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
       <path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/>
@@ -503,10 +506,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== TIMELINE ===== -->
   <section class="tl-sec band">
-    <img class="lf back big" src="images/leaves/leaf-6.webp" alt="" aria-hidden="true" style="--w:190px;--r:40deg;--t:10s;--dl:-2s;left:-104px;top:22%">
-    <img class="lf back big" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:170px;--r:-24deg;--t:9s;--dl:-4s;right:-82px;bottom:8%">
-    <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:90px;--r:70deg;--t:7s;--dl:-1s;right:-34px;top:14%">
-    <img class="lf back" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:78px;--r:-52deg;--t:8s;--dl:-2s;right:-30px;top:52%">
+    <img class="lf back" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:66px;--r:42deg;--t:8s;--dl:-2s;right:-30px;top:44%">
     <h2 class="title split" data-split data-i18n="prog">Бағдарлама</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
       <path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/>
@@ -541,7 +541,7 @@ textarea.inp{min-height:88px;resize:vertical}
       </div>
       <div class="tl-item">
         <svg class="tl-ico" viewBox="0 0 34 34"><path d="M17 28s-10-6.3-10-13a5.5 5.5 0 0 1 10-3.2A5.5 5.5 0 0 1 27 15c0 6.7-10 13-10 13z"/></svg>
-        <div class="tl-time">00:00</div><div class="tl-name" data-i18n="p5">Тойдың соңы</div>
+        <div class="tl-time">00:00</div><div class="tl-name" data-i18n="p5">Тойдың аяқталуы</div>
         <div class="tl-desc" data-i18n="p5d">Бізбен бірге болғандарыңызға рахмет!</div>
       </div>
     </div>
@@ -549,20 +549,17 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== DRESS CODE ===== -->
   <section class="dress paper">
-    <img class="lf back big" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:180px;--r:-26deg;--t:9s;--dl:-3s;left:-88px;top:56%">
-    <img class="lf back big" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:160px;--r:34deg;--t:10s;--dl:-1s;right:-78px;top:42%">
     <div class="tear top t2"></div>
-    <img class="lf" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:106px;--r:30deg;--t:7s;--dl:-3s;right:-22px;top:-76px">
-    <img class="lf" src="images/leaves/leaf-7.webp" alt="" aria-hidden="true" style="--w:86px;--r:-18deg;--t:8s;--dl:-1s;right:66px;top:-54px">
-    <img class="lf" src="images/leaves/leaf-6.webp" alt="" aria-hidden="true" style="--w:62px;--r:76deg;--t:6.5s;--dl:-5s;right:22px;top:-6px">
-    <img class="lf back" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:72px;--r:-44deg;--t:7.5s;--dl:-2s;left:-30px;top:38%">
+    <img class="lf" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:90px;--r:32deg;--t:7.5s;--dl:-1s;right:-20px;top:-66px">
+    <img class="lf" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:60px;--r:-26deg;--t:6.5s;--dl:-3s;right:62px;top:-42px">
+    <img class="lf back" src="images/leaves/leaf-4.webp" alt="" aria-hidden="true" style="--w:66px;--r:-40deg;--t:8s;--dl:-2s;left:-30px;top:40%">
     <h2 class="title split" data-split data-i18n="colors">Дресс-код</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
       <path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/>
       <path pathLength="1" d="M105 3 C96 11 96 19 105 27 C114 19 114 11 105 3Z"/>
       <circle pathLength="1" cx="90" cy="15" r="2"/><circle pathLength="1" cx="120" cy="15" r="2"/>
     </svg>
-    <p class="lead" data-a="up" data-i18n="dressLead">Тойымызда шарап түстер палитрасын қолдасаңыздар, біз өте қуанамыз.</p>
+    <p class="lead" data-a="up" data-i18n="dressLead">Тойымызға шарап түсті реңктердегі киіммен келсеңіздер, қуанышты боламыз.</p>
     <!-- images/dresscode.webp (transparent background) replaces the swatches when it loads; the swatches stay as a fallback. -->
     <figure class="dress-art" id="dressArt" data-a="zoom" hidden>
       <img src="images/dresscode.webp" alt="Дресс-код: шарап түстес көйлектер" data-i18n-alt="dressAlt" decoding="async"
@@ -580,13 +577,9 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== RSVP ===== -->
   <section class="rsvp-sec paper" id="rsvp">
-    <img class="lf back big" src="images/leaves/leaf-9.webp" alt="" aria-hidden="true" style="--w:200px;--r:-30deg;--t:10s;--dl:-2s;left:-100px;top:50%">
-    <img class="lf back big" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:170px;--r:28deg;--t:9s;--dl:-5s;right:-82px;top:10%">
-    <img class="lf back" src="images/leaves/leaf-7.webp" alt="" aria-hidden="true" style="--w:110px;--r:50deg;--t:8s;--dl:-3s;right:-44px;bottom:28%">
-    <img class="lf back" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:90px;--r:-34deg;--t:8s;--dl:-1s;left:-34px;top:30%">
-    <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:70px;--r:42deg;--t:7s;--dl:-4s;right:-24px;top:52%">
-    <img class="lf back" src="images/leaves/leaf-8.webp" alt="" aria-hidden="true" style="--w:100px;--r:-14deg;--t:7.5s;--dl:-2s;right:-20px;bottom:6px">
-    <img class="lf back" src="images/leaves/leaf-1.webp" alt="" aria-hidden="true" style="--w:70px;--r:30deg;--t:6.5s;--dl:-5s;left:-14px;bottom:26px">
+    <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:66px;--r:40deg;--t:8s;--dl:-2s;right:-30px;top:30%">
+    <img class="lf back" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:84px;--r:-26deg;--t:7.5s;--dl:-3s;left:-22px;bottom:18px">
+    <img class="lf back" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:58px;--r:30deg;--t:6.5s;--dl:-1s;left:54px;bottom:4px">
     <div class="eyebrow" data-a="up" data-i18n="rsvpEy">Анкета</div>
     <h2 class="title split" data-split data-i18n="rsvpT">Келесіз бе?</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
@@ -594,7 +587,7 @@ textarea.inp{min-height:88px;resize:vertical}
       <path pathLength="1" d="M105 3 C96 11 96 19 105 27 C114 19 114 11 105 3Z"/>
       <circle pathLength="1" cx="90" cy="15" r="2"/><circle pathLength="1" cx="120" cy="15" r="2"/>
     </svg>
-    <p class="lead" data-a="up" data-i18n="rsvpLead">Тойға келуіңізді алдын ала растауыңызды сұраймыз!</p>
+    <p class="lead" data-a="up" data-i18n="rsvpLead">Тойға келетініңізді алдын ала растауыңызды сұраймыз!</p>
     <div class="rsvp" data-a="up">
       <form id="rsvpForm" novalidate>
         <div class="field" id="fName">
@@ -605,7 +598,7 @@ textarea.inp{min-height:88px;resize:vertical}
         <div class="field">
           <span class="lbl" data-i18n="attQ">Тойға келесіз бе?</span>
           <div class="pills">
-            <label class="pill"><input type="radio" name="att" value="yes" checked><span class="rb"></span><span data-i18n="a1">Иә, әрине</span></label>
+            <label class="pill"><input type="radio" name="att" value="yes" checked><span class="rb"></span><span data-i18n="a1">Иә, келемін</span></label>
             <label class="pill"><input type="radio" name="att" value="pair"><span class="rb"></span><span data-i18n="a2">Жұбайыммен келемін</span></label>
             <label class="pill"><input type="radio" name="att" value="no"><span class="rb"></span><span data-i18n="a3">Өкінішке орай, келе алмаймын</span></label>
           </div>
@@ -659,13 +652,13 @@ var RU = {
   sw1: 'баклажан', sw2: 'бордо', sw3: 'вино', sw4: 'гранат', sw5: 'пудра',
   rsvpEy: 'Анкета', rsvpT: 'Вы придёте?', rsvpLead: 'Просим заранее подтвердить ваше присутствие!',
   name: 'Имя и фамилия', nameErr: 'Пожалуйста, укажите имя', attQ: 'Придёте на той?',
-  a1: 'Да, конечно', a2: 'Приду с супругом / супругой', a3: 'К сожалению, не смогу прийти', send: 'Отправить',
+  a1: 'Да, приду', a2: 'Приду с супругом / супругой', a3: 'К сожалению, не смогу прийти', send: 'Отправить',
   thx: 'Спасибо!', thxText: 'Ваш ответ принят. До встречи на тое!',
   demo: 'Демо-режим: форма ещё не подключена к таблице, ответ не отправлен.',
 };
 // Strings only JS uses, in both languages.
 var TXT = {
-  kk: { wd: ['дс','сс','ср','бс','жм','сн','жс'], thxNo: 'Жауап бергеніңізге рахмет!',
+  kk: { wd: ['дс','сс','ср','бс','жм','сб','жс'], thxNo: 'Жауап бергеніңізге рахмет!',
         fail: 'Жіберу мүмкін болмады. Интернетті тексеріп, қайталап көріңіз.',
         icsTitle: 'Темірлан мен Мадинаның тойы', icsDesc: 'Сіздерді тойымызда күтеміз!' },
   ru: { wd: ['пн','вт','ср','чт','пт','сб','вс'], thxNo: 'Спасибо за ответ!',
