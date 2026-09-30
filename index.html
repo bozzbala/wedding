@@ -11,7 +11,15 @@
 <meta property="og:url" content="https://bozzbala.github.io/wedding/">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#d39a3a">
-<link rel="preload" href="images/hero.webp" as="image">
+<script>
+/* Two versions, one source. ?nophoto (and the separate no-face build) shows a photo without the bride's face
+   (her face isn't shown before беташар); the regular link keeps the couple photo. Only the chosen one is downloaded. */
+var NOPHOTO = /[?&]nophoto(=|&|$)/.test(location.search);
+var HERO = NOPHOTO ? { src: 'images/hero-hands.webp', pos: '88% 50%', side: '50% 40%' }
+                   : { src: 'images/hero.webp', pos: '85% 50%', side: '56% 74%' };
+(function(){ var l = document.createElement('link'); l.rel = 'preload'; l.as = 'image'; l.href = HERO.src; document.head.appendChild(l); })();
+function heroPhoto(img, key){ img.src = HERO.src; img.style.objectPosition = HERO[key]; }
+</script>
 <style>
 /* Every face below covers the Kazakh letters (Ә Ғ Қ Ң Ө Ұ Ү Һ І) via its cyrillic-ext subset. */
 @font-face{font-family:'Shelley';src:url(fonts/asylbek-shelley.woff2) format('woff2');font-display:swap}
@@ -388,7 +396,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
 <!-- ===== DESKTOP SIDE PANEL ===== -->
 <aside class="side" aria-hidden="true">
-  <img src="images/hero.webp" alt="">
+  <img alt=""><script>heroPhoto(document.currentScript.previousElementSibling, 'side')</script>
   <div class="side-top"><div class="eyebrow fade-late" style="--d:.15s" data-i18n="invite">Шақырту</div></div>
   <div class="side-content">
     <div class="names">
@@ -404,7 +412,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
   <!-- ===== HERO ===== -->
   <section class="hero band">
-    <img class="hero-img" src="images/hero.webp" alt="Темірлан мен Мадина">
+    <img class="hero-img" alt="Темірлан мен Мадина"><script>heroPhoto(document.currentScript.previousElementSibling, 'pos')</script>
     <div class="hero-top"><div class="eyebrow fade-late" style="--d:.15s" data-i18n="invite">Шақырту</div></div>
     <div class="hero-content">
       <h1 class="names">
