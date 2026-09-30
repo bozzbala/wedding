@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Темірлан &amp; Мадина — 26.10.2026</title>
-<meta name="description" content="Темірлан мен Мадинаның үйлену тойына шақырту — 26 қазан 2026, 18:00, AQ-OTAY, Алматы">
+<meta name="description" content="Темірлан мен Мадинаның үйлену тойына шақырту — 26 қазан 2026, 17:00, AQ-OTAY, Алматы">
 <meta property="og:title" content="Темірлан &amp; Мадина — шақырту">
-<meta property="og:description" content="26 қазан 2026 · 18:00 · AQ-OTAY, Алматы">
+<meta property="og:description" content="26 қазан 2026 · 17:00 · AQ-OTAY, Алматы">
 <meta property="og:image" content="https://bozzbala.github.io/wedding/images/hero.webp">
 <meta property="og:url" content="https://bozzbala.github.io/wedding/">
 <meta property="og:type" content="website">
@@ -15,10 +15,13 @@
 /* Two versions, one source. ?nophoto (and the separate no-face build) shows a photo without the bride's face
    (her face isn't shown before беташар); the regular link keeps the couple photo. Only the chosen one is downloaded. */
 var NOPHOTO = /[?&]nophoto(=|&|$)/.test(location.search);
+// EXPERIMENT (local): ?text -> no photo, names on a framed wine sheet
+var TEXTONLY = /[?&]text(=|&|$)/.test(location.search);
+if (TEXTONLY) document.documentElement.classList.add('textonly');
 var HERO = NOPHOTO ? { src: 'images/hero-hands.webp', pos: '88% 50%', side: '50% 40%' }
                    : { src: 'images/hero.webp', pos: '85% 50%', side: '56% 74%' };
-(function(){ var l = document.createElement('link'); l.rel = 'preload'; l.as = 'image'; l.href = HERO.src; document.head.appendChild(l); })();
-function heroPhoto(img, key){ img.src = HERO.src; img.style.objectPosition = HERO[key]; }
+if (!TEXTONLY) (function(){ var l = document.createElement('link'); l.rel = 'preload'; l.as = 'image'; l.href = HERO.src; document.head.appendChild(l); })();
+function heroPhoto(img, key){ if (TEXTONLY) { img.remove(); return; } img.src = HERO.src; img.style.objectPosition = HERO[key]; }
 </script>
 <style>
 /* Every face below covers the Kazakh letters (Ә Ғ Қ Ң Ө Ұ Ү Һ І) via its cyrillic-ext subset. */
@@ -172,6 +175,18 @@ body.opened .hero-img{transform:scale(1)}
 .hero-top{position:absolute;top:34px;left:0;right:0;z-index:2;text-align:center}
 .hero-top .eyebrow{color:rgba(255,255,255,.88)}
 .hero-content{position:absolute;left:0;right:0;bottom:11%;z-index:2;text-align:center;padding:0 20px}
+/* ---- EXPERIMENT ?text: typographic first screen, a framed wine sheet ---- */
+.hero-orn{display:none}
+html.textonly .hero,html.textonly .side{background:radial-gradient(ellipse at 50% 42%,#a3343e 0%,#6e1f29 55%,#431118 100%)}
+html.textonly .hero::before,html.textonly .side::before{content:'';position:absolute;inset:18px;z-index:1;pointer-events:none;
+  border:1px solid rgba(240,201,110,.55);outline:1px solid rgba(240,201,110,.22);outline-offset:6px;border-radius:2px;
+  background-image:radial-gradient(rgba(255,220,170,.14) 1px,transparent 1.3px);background-size:22px 22px}
+html.textonly .hero::after,html.textonly .side::after{background:radial-gradient(ellipse at 50% 45%,transparent 48%,rgba(30,4,8,.42))}
+html.textonly .hero-content,html.textonly .side-content{bottom:auto;top:50%;transform:translateY(-50%)}
+html.textonly .hero-top{top:48px}
+html.textonly .hero-orn{display:block;margin:26px auto 0}
+.hero-orn path,.hero-orn circle{stroke:var(--gold-l)}
+.hero-orn circle{fill:var(--gold-l)}
 .names{font-family:var(--script);font-weight:400;line-height:.98;font-size:clamp(58px,17vw,92px);text-shadow:0 4px 24px rgba(0,0,0,.25)}
 .names .amp{display:block;font-family:var(--serif);font-size:.4em;color:var(--gold-l);margin:.12em 0 .02em;letter-spacing:.1em}
 .write{display:block;clip-path:inset(-10% 100% -10% 0);transition:clip-path 1s cubic-bezier(.55,.1,.25,1);transition-delay:var(--d,0s)}
@@ -405,6 +420,7 @@ textarea.inp{min-height:88px;resize:vertical}
       <span class="write" style="--d:1.05s">Мадина</span>
     </div>
     <div class="hero-date fade-late" style="--d:1.7s">26<i>·</i>10<i>·</i>2026</div>
+    <svg class="ornament hero-orn" viewBox="0 0 210 30" aria-hidden="true"><path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/><path pathLength="1" d="M105 3 C96 11 96 19 105 27 C114 19 114 11 105 3Z"/><circle pathLength="1" cx="90" cy="15" r="2"/><circle pathLength="1" cx="120" cy="15" r="2"/></svg>
   </div>
 </aside>
 
@@ -421,6 +437,7 @@ textarea.inp{min-height:88px;resize:vertical}
         <span class="write" style="--d:1.05s">Мадина</span>
       </h1>
       <div class="hero-date fade-late" style="--d:1.7s">26<i>·</i>10<i>·</i>2026</div>
+      <svg class="ornament hero-orn" viewBox="0 0 210 30" aria-hidden="true"><path pathLength="1" d="M4 15 C40 15 60 8 84 15"/><path pathLength="1" d="M206 15 C170 15 150 8 126 15"/><path pathLength="1" d="M105 3 C96 11 96 19 105 27 C114 19 114 11 105 3Z"/><circle pathLength="1" cx="90" cy="15" r="2"/><circle pathLength="1" cx="120" cy="15" r="2"/></svg>
     </div>
     <div class="scroll-cue"></div>
   </section>
@@ -460,7 +477,7 @@ textarea.inp{min-height:88px;resize:vertical}
     </div>
     <div class="cal" id="cal" data-a="up"></div>
     <p class="cal-note" data-a="up" data-i18n="calNote">Республика күніне байланысты 26 қазан — демалыс күні</p>
-    <div class="time-pill" data-a="up"><span data-i18n="time">Сағат 18:00</span></div>
+    <div class="time-pill" data-a="up"><span data-i18n="time">Сағат 17:00</span></div>
 
     <div class="eyebrow cd-title" data-a="up" data-i18n="until">Тойға дейін</div>
     <div class="countdown" data-a="up">
@@ -522,27 +539,27 @@ textarea.inp{min-height:88px;resize:vertical}
       </svg>
       <div class="tl-item">
         <svg class="tl-ico" viewBox="0 0 34 34"><circle cx="12" cy="11" r="4"/><circle cx="23" cy="12" r="3.3"/><path d="M4 28c0-5 3.6-8.5 8-8.5s8 3.5 8 8.5M19 21.5c1-.6 2.4-1 4-1 3.7 0 7 3 7 7.5"/></svg>
-        <div class="tl-time">18:00</div><div class="tl-name" data-i18n="p1">Қонақтарды қарсы алу</div>
+        <div class="tl-time">17:00</div><div class="tl-name" data-i18n="p1">Қонақтарды қарсы алу</div>
         <div class="tl-desc" data-i18n="p1d">Қадірлі қонақтарымызды қуанышпен қарсы аламыз</div>
       </div>
       <div class="tl-item">
         <svg class="tl-ico" viewBox="0 0 34 34"><path d="M17 5c-6 0-9 5-9 11v12h18V16c0-6-3-11-9-11z"/><path d="M12 28V17c0-3 2-6 5-6s5 3 5 6v11"/></svg>
-        <div class="tl-time">19:00</div><div class="tl-name" data-i18n="p2">Беташар рәсімі</div>
+        <div class="tl-time">18:00</div><div class="tl-name" data-i18n="p2">Беташар рәсімі</div>
         <div class="tl-desc" data-i18n="p2d">Келіннің бетін ашу — жаңа отбасымен танысу</div>
       </div>
       <div class="tl-item">
         <svg class="tl-ico" viewBox="0 0 34 34"><circle cx="13" cy="19" r="7"/><circle cx="21" cy="19" r="7"/><path d="M14 7l3-3 3 3"/></svg>
-        <div class="tl-time">19:30</div><div class="tl-name" data-i18n="p3">Құдаларды қарсы алу</div>
+        <div class="tl-time">18:30</div><div class="tl-name" data-i18n="p3">Құдаларды қарсы алу</div>
         <div class="tl-desc" data-i18n="p3d">Құрметті құдаларымызды қарсы аламыз</div>
       </div>
       <div class="tl-item">
         <svg class="tl-ico" viewBox="0 0 34 34"><path d="M10 5h6l-1 9a4 4 0 0 1-4 0zM18 5h6l-1 9a4 4 0 0 1-4 0zM13 14v12M21 14v12M9 28h8M17 28h8"/></svg>
-        <div class="tl-time">21:00</div><div class="tl-name" data-i18n="p4">Той салтанаты</div>
+        <div class="tl-time">20:00</div><div class="tl-name" data-i18n="p4">Той салтанаты</div>
         <div class="tl-desc" data-i18n="p4d">Ыстық тілектер, ән мен би, думанды кеш</div>
       </div>
       <div class="tl-item">
         <svg class="tl-ico" viewBox="0 0 34 34"><path d="M17 28s-10-6.3-10-13a5.5 5.5 0 0 1 10-3.2A5.5 5.5 0 0 1 27 15c0 6.7-10 13-10 13z"/></svg>
-        <div class="tl-time">00:00</div><div class="tl-name" data-i18n="p5">Тойдың аяқталуы</div>
+        <div class="tl-time">23:00</div><div class="tl-name" data-i18n="p5">Тойдың аяқталуы</div>
         <div class="tl-desc" data-i18n="p5d">Бізбен бірге болғандарыңызға рахмет!</div>
       </div>
     </div>
@@ -618,7 +635,7 @@ textarea.inp{min-height:88px;resize:vertical}
 
 <script>
 /* ---------- Той мәліметтері (edit here) ---------- */
-var EVENT = new Date(2026, 9, 26, 18, 0, 0);
+var EVENT = new Date(2026, 9, 26, 17, 0, 0);
 var VENUE = {
   name: 'AQ-OTAY',
   address: 'Алматы қ., Озёрная көшесі, 2',
@@ -640,7 +657,7 @@ var RU = {
   who: 'Родные и близкие, братья и сёстры, сваты, друзья, соседи и коллеги!',
   lead1: 'Приглашаем вас стать почётными гостями в самый счастливый день нашей жизни — на нашу свадьбу!',
   lead2: 'Для нас большая радость, когда в этот счастливый момент рядом самые близкие люди.',
-  when: 'День торжества', month: 'Октябрь', yearDay: '2026 · понедельник', time: 'Начало в 18:00',
+  when: 'День торжества', month: 'Октябрь', yearDay: '2026 · понедельник', time: 'Начало в 17:00',
   calNote: '26 октября — выходной день в связи с Днём Республики',
   until: 'До тоя осталось', cdD: 'дней', cdH: 'часов', cdM: 'минут', cdS: 'секунд', ics: 'Добавить в календарь',
   place: 'Место торжества', restaurant: 'Ресторан', map: 'Открыть в 2ГИС',
@@ -811,7 +828,7 @@ var TXT = {
   document.getElementById('icsBtn').addEventListener('click', function(){
     var ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//TM Wedding//KK','BEGIN:VEVENT',
       'UID:temirlan-madina-20261026@invite','DTSTAMP:20260101T000000Z',
-      'DTSTART:20261026T180000','DTEND:20261027T000000',
+      'DTSTART:20261026T170000','DTEND:20261026T230000',
       'SUMMARY:' + TXT[lang].icsTitle,
       'LOCATION:' + VENUE.name + '\\, ' + (lang === 'ru' ? VENUE.addressRu : VENUE.address).replace(/,/g, '\\,'),
       'DESCRIPTION:' + TXT[lang].icsDesc + ' ' + VENUE.mapUrl,
