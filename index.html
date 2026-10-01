@@ -421,7 +421,7 @@ textarea.inp{min-height:88px;resize:vertical}
 </div>
 
 <button class="music-btn" id="musicBtn" type="button" aria-label="Музыка / Music"><span class="play" aria-hidden="true"></span></button>
-<audio id="audioEl" src="audio/music.mp3#t=12" preload="auto"></audio>
+<audio id="audioEl" src="audio/music.mp3#t=10" preload="auto"></audio>
 
 <div class="progress" id="progress"></div>
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -771,12 +771,12 @@ var TXT = {
   /* ---------- music ---------- */
   // Starts at MUSIC_START seconds and loops back there. The envelope tap is the guest's
   // first gesture, so playback started from it is allowed by mobile browsers.
-  var MUSIC_START = 12, audio = document.getElementById('audioEl'), musicBtn = document.getElementById('musicBtn');
+  var MUSIC_START = 10, audio = document.getElementById('audioEl'), musicBtn = document.getElementById('musicBtn');
   function playMusic(){
     try { if (audio.currentTime < MUSIC_START) audio.currentTime = MUSIC_START; } catch (e) {}
     var p = audio.play(); if (p && p.catch) p.catch(function(){});
   }
-  // #t=12 on the src already asks the browser to start there; this covers browsers that ignore it
+  // #t=10 on the src already asks the browser to start there; this covers browsers that ignore it
   audio.addEventListener('loadedmetadata', function(){ try { if (audio.currentTime < MUSIC_START) audio.currentTime = MUSIC_START; } catch (e) {} });
   audio.addEventListener('ended', function(){ audio.currentTime = MUSIC_START; playMusic(); });
   audio.addEventListener('play', function(){ musicBtn.classList.add('is-playing'); });
