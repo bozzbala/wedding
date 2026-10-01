@@ -33,6 +33,7 @@ for p in DST.iterdir():                       # clean everything except the targ
     shutil.rmtree(p) if p.is_dir() else p.unlink()
 (DST / 'index.html').write_text(html, encoding='utf-8')
 shutil.copytree(SRC / 'fonts', DST / 'fonts')
+shutil.copytree(SRC / 'audio', DST / 'audio')
 shutil.copytree(SRC / 'images', DST / 'images', ignore=shutil.ignore_patterns(*PHOTOS))
 (DST / '.nojekyll').write_text('')
 print('built', DST, '->', BASE)

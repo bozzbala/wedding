@@ -318,6 +318,20 @@ body.opened .fade-late{opacity:1;transform:none}
 .swatches[hidden]{display:none}
 .sw span{display:block;margin-top:8px;font-family:var(--caps);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 
+/* ============ MUSIC (same control as madina-uzatu, site colours) ============ */
+.music-btn{position:fixed;right:18px;bottom:18px;z-index:45;width:50px;height:50px;border-radius:50%;cursor:pointer;
+  border:1px solid rgba(200,144,46,.45);background:var(--paper);box-shadow:0 10px 26px rgba(60,20,10,.25);
+  display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.6);pointer-events:none;
+  transition:opacity .5s,transform .5s var(--ease)}
+body.opened .music-btn{opacity:1;transform:none;pointer-events:auto}
+.music-btn .play{width:0;height:0;border-style:solid;border-width:7px 0 7px 12px;border-color:transparent transparent transparent #8e2b2b;margin-left:3px}
+.music-btn.is-playing .play{width:12px;height:13px;border:none;margin:0;background:linear-gradient(90deg,#8e2b2b 0 3.5px,transparent 3.5px 8px,#8e2b2b 8px 13px)}
+
+/* ============ HOSTS (той иелері), right before the RSVP ============ */
+.hosts{text-align:center;margin-bottom:58px}
+.hosts-name{font-family:var(--script);font-weight:400;font-size:clamp(40px,11vw,54px);line-height:1.1;color:var(--olive);margin-top:10px}
+.hosts-note{margin-top:12px;font-family:var(--body);font-style:italic;font-size:15px;color:var(--muted)}
+
 /* ============ RSVP ============ */
 .rsvp{max-width:420px;margin:36px auto 0;background:var(--paper);border-radius:24px;padding:32px 24px 28px;box-shadow:0 40px 70px -40px rgba(150,100,25,.42);border:1px solid rgba(179,139,77,.22)}
 .field{margin-bottom:20px}
@@ -405,6 +419,9 @@ textarea.inp{min-height:88px;resize:vertical}
   <button type="button" data-lang="kk" aria-pressed="true">ҚАЗ</button>
   <button type="button" data-lang="ru" aria-pressed="false">РУС</button>
 </div>
+
+<button class="music-btn" id="musicBtn" type="button" aria-label="Музыка / Music"><span class="play" aria-hidden="true"></span></button>
+<audio id="audioEl" src="audio/music.mp3#t=12" preload="auto"></audio>
 
 <div class="progress" id="progress"></div>
 <canvas id="petals" aria-hidden="true"></canvas>
@@ -597,6 +614,11 @@ textarea.inp{min-height:88px;resize:vertical}
     <img class="lf back" src="images/leaves/leaf-3.webp" alt="" aria-hidden="true" style="--w:66px;--r:40deg;--t:8s;--dl:-2s;right:-30px;top:30%">
     <img class="lf back" src="images/leaves/leaf-2.webp" alt="" aria-hidden="true" style="--w:84px;--r:-26deg;--t:7.5s;--dl:-3s;left:-22px;bottom:18px">
     <img class="lf back" src="images/leaves/leaf-5.webp" alt="" aria-hidden="true" style="--w:58px;--r:30deg;--t:6.5s;--dl:-1s;left:54px;bottom:4px">
+    <div class="hosts" data-a="up">
+      <div class="eyebrow" data-i18n="hostsL">Той иелері</div>
+      <div class="hosts-name">Берік &amp; Сандуғаш</div>
+      <div class="hosts-note" data-i18n="hostsNote">Сіздерді тойымызда күтеміз!</div>
+    </div>
     <div class="eyebrow" data-a="up" data-i18n="rsvpEy">Анкета</div>
     <h2 class="title split" data-split data-i18n="rsvpT">Келесіз бе?</h2>
     <svg class="ornament" viewBox="0 0 210 30" aria-hidden="true">
@@ -670,6 +692,7 @@ var RU = {
   colors: 'Дресс-код', dressLead: 'Будем очень рады, если в своих образах вы поддержите изумрудные, бордовые, сапфировые и сливовые оттенки.',
   dressAlt: 'Дресс-код: платья изумрудного, бордового, сапфирового и сливового цветов',
   sw1: 'изумруд', sw2: 'бордо', sw3: 'сапфир', sw4: 'слива',
+  hostsL: 'Хозяева торжества', hostsNote: 'Будем рады видеть вас!',
   rsvpEy: 'Анкета', rsvpT: 'Вы придёте?', rsvpLead: 'Просим заранее подтвердить ваше присутствие!',
   name: 'Имя и фамилия', nameErr: 'Пожалуйста, укажите имя', attQ: 'Придёте на той?',
   a1: 'Да, приду', a2: 'Приду с супругом / супругой', a3: 'К сожалению, не смогу прийти', send: 'Отправить',
@@ -698,6 +721,7 @@ var TXT = {
   var intro = document.getElementById('intro'), env = document.getElementById('env'), opened = false;
   function openEnvelope(){
     if (opened) return; opened = true;
+    playMusic();
     env.classList.add('opening','pop');
     intro.classList.add('opening');
     setTimeout(function(){ env.classList.add('open'); }, 320);
@@ -744,6 +768,20 @@ var TXT = {
     requestAnimationFrame(step);
   }
 
+  /* ---------- music ---------- */
+  // Starts at MUSIC_START seconds and loops back there. The envelope tap is the guest's
+  // first gesture, so playback started from it is allowed by mobile browsers.
+  var MUSIC_START = 12, audio = document.getElementById('audioEl'), musicBtn = document.getElementById('musicBtn');
+  function playMusic(){
+    try { if (audio.currentTime < MUSIC_START) audio.currentTime = MUSIC_START; } catch (e) {}
+    var p = audio.play(); if (p && p.catch) p.catch(function(){});
+  }
+  // #t=12 on the src already asks the browser to start there; this covers browsers that ignore it
+  audio.addEventListener('loadedmetadata', function(){ try { if (audio.currentTime < MUSIC_START) audio.currentTime = MUSIC_START; } catch (e) {} });
+  audio.addEventListener('ended', function(){ audio.currentTime = MUSIC_START; playMusic(); });
+  audio.addEventListener('play', function(){ musicBtn.classList.add('is-playing'); });
+  audio.addEventListener('pause', function(){ musicBtn.classList.remove('is-playing'); });
+  musicBtn.addEventListener('click', function(e){ e.stopPropagation(); audio.paused ? playMusic() : audio.pause(); });
   env.addEventListener('click', openEnvelope);
   env.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openEnvelope(); } });
 
